@@ -1,5 +1,5 @@
 node {
-    def mvnHome = tool 'maven-3.5.2'
+    def mvnHome = tool 'maven-3.9.3'
     def dockerImage
     def dockerImageTag = "devopsexample${env.BUILD_NUMBER}"
     
@@ -17,11 +17,11 @@ node {
     }
     
     stage('Build Docker Image') {
-      sh "docker -H tcp://192.168.11.101:2375 build -t devopsexample:${env.BUILD_NUMBER} ."
+      sh "docker -H tcp://192.168.11.102:2375 build -t devopsexample:${env.BUILD_NUMBER} ."
     }
     
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
-	sh "docker -H tcp://192.168.11.101:2375 run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
+	sh "docker -H tcp://192.168.11.102:2375 run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
     }
 }
